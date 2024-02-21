@@ -24,6 +24,23 @@
   }
 }
 
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-all-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 16px;
+  color: #0b69ff;
+  cursor: pointer;
+}
+
 .cart-heading {
   color: #3e4c59;
   font-family: 'Roboto';

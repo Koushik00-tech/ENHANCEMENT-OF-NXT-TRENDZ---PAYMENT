@@ -17,11 +17,54 @@ class App extends Component {
     cartList: [],
   }
 
-  //   TODO: Add your code for remove all cart items, increment cart item quantity, decrement cart item quantity, remove cart item
-
   addCartItem = product => {
-    this.setState(prevState => ({cartList: [...prevState.cartList, product]}))
-    //   TODO: Update the code here to implement addCartItem
+    this.setState(prevState => {
+      const isProductAlreadyExists = prevState.cartList.find(
+        ele => ele.id === product.id,
+      )
+
+      if (isProductAlreadyExists) {
+        return {
+          cartList: prevState.cartList.map(item =>
+            item.id === product.id
+              ? {...item, quantity: item.quantity + product.quantity}
+              : item,
+          ),
+        }
+      }
+
+      return {
+        cartList: [...prevState.cartList, product],
+      }
+    })
+  }
+
+  removeCartItem = productId => {
+    this.setState(prevState => ({
+      cartList: prevState.cartList.filter(item => item.id !== productId),
+    }))
+  }
+
+  removeAllCartItems = () => {
+    this.setState({cartList: []})
+  }
+
+  incrementCartItemQuantity = productId => {
+    this.setState(prevState => ({
+      cartList: prevState.cartList.map(item =>
+        item.id === productId ? {...item, quantity: item.quantity + 1} : item,
+      ),
+    }))
+  }
+
+  decrementCartItemQuantity = productId => {
+    this.setState(prevState => ({
+      cartList: prevState.cartList
+        .map(item =>
+          item.id === productId ? {...item, quantity: item.quantity - 1} : item,
+        )
+        .filter(item => item.quantity >= 1),
+    }))
   }
 
   render() {
@@ -33,6 +76,9 @@ class App extends Component {
           cartList,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
+          removeAllCartItems: this.removeAllCartItems,
+          incrementCartItemQuantity: this.incrementCartItemQuantity,
+          decrementCartItemQuantity: this.decrementCartItemQuantity,
         }}
       >
         <Switch>
